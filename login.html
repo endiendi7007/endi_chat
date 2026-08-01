@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Endi's Chat</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- iro.js Color Wheel Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+</head>
+<body class="dark">
+
+  <!-- Immediate Theme Initializer (Prevents flashing) -->
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.body.classList.remove('dark');
+      document.body.classList.add('light');
+    } else {
+      document.body.classList.remove('light');
+      document.body.classList.add('dark');
+    }
+  </script>
+
+  <!-- Top Bar Header -->
+  <header class="top-bar">
+    <span class="logo">Endi's Chat</span>
+
+    <!-- Direct Link to Settings Page -->
+    <a href="settings.html" class="icon-btn" aria-label="Settings">
+      <img src="pictures/darksettings.png" class="theme-icon dark-icon" alt="Dark Settings">
+      <img src="pictures/lightsettings.png" class="theme-icon light-icon" alt="Light Settings">
+    </a>
+  </header>
+
+  <!-- Login Card Container -->
+  <main class="login-container">
+    <div class="login-card">
+      <h2 id="card-title">Welcome</h2>
+      <p class="subtitle" id="card-subtitle">Enter your details below</p>
+
+      <!-- Standard form behavior with event prevention in JS -->
+      <form class="login-form" action="#" method="POST">
+        
+        <!-- ========================================== -->
+        <!-- STEP 1: Name, Color, and Guest options     -->
+        <!-- ========================================== -->
+        <div id="step-1">
+          <!-- 1. Name Input -->
+          <div class="input-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+          </div>
+
+          <!-- 2. Color Input -->
+          <div class="input-group color-input-group">
+            <label for="color-text">Color:</label>
+            
+            <div class="color-picker-row">
+              <input type="text" id="color-text" value="" placeholder="Red">
+              
+              <!-- Live Color Preview Box -->
+              <div id="color-preview" class="color-preview-box"></div>
+
+              <!-- The "+" Toggle Button -->
+              <button type="button" id="color-toggle-btn" class="toggle-wheel-btn" aria-label="Toggle Color Wheel">+</button>
+            </div>
+             
+            <!-- Custom Error Feedback -->
+            <span id="color-error" class="color-error-msg">Invalid color name or hex code</span>
+          </div>
+
+          <!-- 3. The "Pro" More Button with SVG Chevron -->
+          <button type="button" id="more-btn" class="more-btn hidden" aria-expanded="false" aria-controls="token-option-group">
+            <span>More</span>
+            <svg class="dropdown-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <!-- 4. Token Option Group (Wrapped for CSS Grid Animation) -->
+          <div id="token-option-group" class="token-option-group hidden">
+            <div class="token-content-wrapper">
+              <label for="has-token-checkbox" class="checkbox-label">
+                <span>Do You have a token?</span>
+                <input type="checkbox" id="has-token-checkbox">
+              </label>
+            </div>
+          </div>
+
+          <!-- 5. Submit Button (Step 1) -->
+          <button type="submit" class="submit-btn" id="step-1-btn">
+            <span id="submit-btn-text">Enter Chat</span>
+          </button>
+        </div>
+
+     <!-- ========================================== -->
+<!-- STEP 2: Token Entry View (Same Card)       -->
+<!-- ========================================== -->
+<div id="step-2" class="step-hidden">
+  
+  <!-- Top Right 'X' Close Button -->
+  <button type="button" id="close-token-btn" class="close-step-btn" aria-label="Close Token View">&times;</button>
+
+  <div class="input-group" style="margin-top: 10px;">
+    <label for="token-input">Secret Token</label>
+    
+    <!-- Input Wrapper with Eye Toggle -->
+    <div class="password-input-wrapper">
+      <input type="password" id="token-input" placeholder="Paste your token here">
+      
+      <button type="button" id="toggle-token-visibility" class="toggle-eye-btn" aria-label="Toggle token visibility">
+        <!-- Eye Off (Hidden state) -->
+        <svg id="eye-icon-off" class="eye-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        </svg>
+
+        <!-- Eye On (Visible state) -->
+        <svg id="eye-icon-on" class="eye-icon hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Final Submit Button (Full Width) -->
+  <button type="submit" class="submit-btn" id="step-2-btn" style="margin-top: 20px;">Join Chat</button>
+
+</div>
+  </main>
+
+  <!-- Floating Draggable Color Window -->
+  <div id="wheel-popover" class="wheel-popover">
+    <div class="popover-header" id="wheel-header">
+      <span>Color Wheel</span>
+      <button type="button" class="close-popover-btn" id="close-wheel-btn" aria-label="Close">&times;</button>
+    </div>
+    <div class="popover-body">
+      <div id="color-wheel"></div>
+    </div>
+  </div>
+
+  <!-- Custom Scripts (guestmode.js MUST load first) -->
+  <script src="guestmode.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Endi's Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+
+  <!-- Immediate Theme Initializer (Prevents flashing the wrong theme on reload) -->
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.body.classList.remove('dark');
+      document.body.classList.add('light');
+    }
+  </script>
+
+  <!-- Header Top Bar -->
+  <header class="top-bar">
+    <span class="logo">Settings</span>
+    
+    <!-- Back Button with Dual Theme Images -->
+    <a href="login.html" class="back-btn" aria-label="Go Back">
+      <img src="pictures/backdark.png" alt="Back" class="back-icon dark-back">
+      <img src="pictures/backlight.png" alt="Back" class="back-icon light-back">
+    </a>
+  </header>
+
+  <!-- Settings Container -->
+  <main class="settings-container">
+    <div class="setting-row">
+      <span class="setting-label">Theme:</span>
+
+      <!-- Wrapper wraps BOTH button and text together -->
+      <div class="toggle-wrapper">
+        <button id="theme-toggle" class="custom-toggle" type="button" aria-label="Toggle Light/Dark Theme">
+          <img id="toggle-img" src="pictures/dark.png" alt="Theme Toggle">
+        </button>
+        <span id="theme-status" class="theme-status-text">Night mode</span>
+      </div>
+    </div>  
+  </main>
+
+  <!-- Script placed cleanly before body closing tag -->
+  
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const toggleImg = document.getElementById('toggle-img');
+    const themeStatus = document.getElementById('theme-status');
+
+    const ANIMATION_MS = 570; 
+
+    // Preload animation images
+    const animDarkToLight = new Image();
+    animDarkToLight.src = 'pictures/darktolight.webp';
+
+    const animLightToDark = new Image();
+    animLightToDark.src = 'pictures/lighttodark.webp';
+
+    let isAnimating = false;
+
+    // 1. SET CORRECT TOGGLE STATE ON PAGE LOAD
+    if (document.body.classList.contains('light')) {
+      toggleImg.src = 'pictures/light.png';
+      themeStatus.textContent = 'Day mode';
+    } else {
+      toggleImg.src = 'pictures/dark.png';
+      themeStatus.textContent = 'Night mode';
+    }
+
+    // 2. TOGGLE THEME ON CLICK & SAVE PREFERENCE
+    toggleBtn.addEventListener('click', () => {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      if (document.body.classList.contains('dark')) {
+        // Switch Dark -> Light
+        toggleImg.src = animDarkToLight.src + '?' + Date.now();
+
+        setTimeout(() => {
+          document.body.classList.replace('dark', 'light');
+          toggleImg.src = 'pictures/light.png';
+          themeStatus.textContent = 'Day mode';
+
+          // SAVE CHOICE PERMANENTLY
+          localStorage.setItem('theme', 'light');
+          isAnimating = false;
+        }, ANIMATION_MS);
+
+      } else {
+        // Switch Light -> Dark
+        toggleImg.src = animLightToDark.src + '?' + Date.now();
+
+        setTimeout(() => {
+          document.body.classList.replace('light', 'dark');
+          toggleImg.src = 'pictures/dark.png';
+          themeStatus.textContent = 'Night mode';
+
+          // SAVE CHOICE PERMANENTLY
+          localStorage.setItem('theme', 'dark');
+          isAnimating = false;
+        }, ANIMATION_MS);
+      }
+    });
+  </script>
+
+</body>
+</html>
