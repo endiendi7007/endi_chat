@@ -1384,3 +1384,141 @@ body.light .toast {
 .setting-hint code {
   font-size: 0.7rem;
 }
+
+/* ==========================================
+   Login server status banner
+   ========================================== */
+.server-status {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 8px 12px;
+  margin: 0 0 18px;
+  border-radius: 10px;
+  line-height: 1.35;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  background: rgba(128, 128, 128, 0.2);
+  color: inherit;
+  opacity: 0.95;
+}
+
+.server-status.pending {
+  background: rgba(241, 196, 15, 0.22);
+  color: #f1c40f;
+}
+
+.server-status.ok {
+  background: rgba(46, 204, 113, 0.22);
+  color: #2ecc71;
+}
+
+.server-status.err {
+  background: rgba(231, 76, 60, 0.22);
+  color: #e74c3c;
+}
+
+.server-status.warn {
+  background: rgba(230, 126, 34, 0.22);
+  color: #e67e22;
+}
+
+body.light .server-status.pending {
+  color: #b7950b;
+}
+body.light .server-status.ok {
+  color: #1e8449;
+}
+body.light .server-status.err {
+  color: #c0392b;
+}
+body.light .server-status.warn {
+  color: #d35400;
+}
+
+/* ==========================================
+   Login checking state (hide form until probe done)
+   ========================================== */
+.login-checking {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 12px 4px 8px;
+  min-height: 160px;
+  justify-content: center;
+}
+
+.login-checking.hidden,
+.login-ready.hidden {
+  display: none !important;
+}
+
+.login-ready {
+  animation: pageFadeIn 0.35s ease-in-out;
+}
+
+.checking-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid rgba(128, 128, 128, 0.25);
+  border-top-color: currentColor;
+  margin-bottom: 16px;
+  animation: checkingSpin 0.8s linear infinite;
+  opacity: 0.85;
+}
+
+body.dark .checking-spinner {
+  border-top-color: #b794f4;
+  color: #b794f4;
+}
+
+body.light .checking-spinner {
+  border-top-color: #1E98D9;
+  color: #1E98D9;
+}
+
+@keyframes checkingSpin {
+  to { transform: rotate(360deg); }
+}
+
+.login-checking h2 {
+  margin: 0 0 6px;
+  font-size: 24px;
+}
+
+.login-checking .subtitle {
+  margin-bottom: 16px;
+}
+
+.login-checking .server-status {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.server-retry-btn {
+  margin-top: 18px;
+  max-width: 200px;
+}
+
+.login-checking .checking-spinner.hidden {
+  display: none !important;
+}
+
+.checking-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin: 4px 0 14px;
+  border-radius: 12px;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.checking-image.hidden {
+  display: none !important;
+}
+
+.login-checking .checking-spinner {
+  margin-bottom: 10px;
+}

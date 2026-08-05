@@ -29,11 +29,27 @@
   </header>
 
   <main class="login-container">
-    <div class="login-card">
-      <h2 id="card-title">Welcome</h2>
-      <p class="subtitle" id="card-subtitle">Enter your details below</p>
+    <div class="login-card" id="loginCard">
+      <!-- Shown only while probing the backend -->
+      <div id="loginChecking" class="login-checking">
+        <div class="checking-spinner" aria-hidden="true"></div>
+        <img id="checking-image" class="checking-image hidden" src="" alt="" width="120" height="120">
+        <div id="serverStatus" class="server-status pending" role="status" aria-live="polite">
+          Checking....
+        </div>
+        <button type="button" id="serverRetryBtn" class="submit-btn server-retry-btn hidden">
+          Retry
+        </button>
+      </div>
 
-      <form class="login-form" action="#" method="POST">
+      <!-- Real login UI — hidden until probe finishes -->
+      <div id="loginReady" class="login-ready hidden">
+        <h2 id="card-title">Welcome</h2>
+        <p class="subtitle" id="card-subtitle">Enter your details below</p>
+
+        <div id="serverStatusReady" class="server-status ok" role="status" aria-live="polite"></div>
+
+        <form class="login-form" action="#" method="POST">
 
         <div id="step-1">
           <div class="input-group">
@@ -95,6 +111,7 @@
           <button type="submit" class="submit-btn" id="step-2-btn" style="margin-top: 20px;">Join Chat</button>
         </div>
       </form>
+      </div><!-- /loginReady -->
     </div>
   </main>
 
