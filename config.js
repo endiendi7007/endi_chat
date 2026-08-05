@@ -4,8 +4,8 @@
  * Port must match the backend (default 8765).
  */
 window.ENDI_CONFIG = {
-  backendHost: "192.168.1.10",   // ← change this
-  backendPort: 8765,
+  backendHost: "https://1c98d82b94a806de-117-227-11-71.serveousercontent.com/",   // ← change this
+  backendPort: 443,
 
   get wsUrl() {
     return `ws://${this.backendHost}:${this.backendPort}`;
