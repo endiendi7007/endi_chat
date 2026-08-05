@@ -4,10 +4,10 @@
  * Port must match the backend (default 8765).
  */
 window.ENDI_CONFIG = {
-  backendHost: "https://1c98d82b94a806de-117-227-11-71.serveousercontent.com/",   // ← change this
+  backendHost: "superseraphic-chi-paradoxically.ngrok-free.dev",   // ← change this
   backendPort: 443,
 
   get wsUrl() {
-    return `ws://${this.backendHost}:${this.backendPort}`;
+    return `wss://${this.backendHost}:${this.backendPort}`;
   }
 };
