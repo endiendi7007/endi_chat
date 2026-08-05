@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings – Endi's Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+
+  <script>
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.body.classList.remove('dark');
+      document.body.classList.add('light');
+    }
+  </script>
+
+  <header class="top-bar">
+    <span class="logo">Settings</span>
+    <a href="login.html" id="back-btn" class="back-btn" aria-label="Go back">
+      <img src="pictures/backdark.png" alt="Back" class="back-icon dark-back">
+      <img src="pictures/backlight.png" alt="Back" class="back-icon light-back">
+    </a>
+  </header>
+
+  <main class="settings-container">
+    <div class="setting-row">
+      <span class="setting-label">Theme</span>
+      <div class="toggle-wrapper">
+        <button id="theme-toggle" class="custom-toggle" type="button" aria-label="Toggle theme">
+          <img id="toggle-img" src="pictures/dark.png" alt="Theme">
+        </button>
+        <span id="theme-status" class="theme-status-text" aria-live="polite">Night mode</span>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <span class="setting-label">Backend</span>
+      <div class="backend-info">
+        <span id="backend-display" class="backend-display">—</span>
+        <p class="setting-hint">Edit <code>config.js</code> to change IP / port</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="config.js"></script>
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const toggleImg = document.getElementById('toggle-img');
+    const themeStatus = document.getElementById('theme-status');
+    const backBtn = document.getElementById('back-btn');
+    const backendDisplay = document.getElementById('backend-display');
+
+    if (window.ENDI_CONFIG) {
+      backendDisplay.textContent = window.ENDI_CONFIG.wsUrl;
+    }
+
+    const ANIMATION_MS = 570;
+
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (document.referrer && document.referrer !== window.location.href) {
+        window.location.href = document.referrer;
+      } else {
+        window.location.href = backBtn.getAttribute('href');
+      }
+    });
+
+    const animDarkToLight = new Image();
+    animDarkToLight.src = 'pictures/darktolight.webp';
+    const animLightToDark = new Image();
+    animLightToDark.src = 'pictures/lighttodark.webp';
+
+    let isAnimating = false;
+
+    if (document.body.classList.contains('light')) {
+      toggleImg.src = 'pictures/light.png';
+      themeStatus.textContent = 'Day mode';
+    } else {
+      toggleImg.src = 'pictures/dark.png';
+      themeStatus.textContent = 'Night mode';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      if (document.body.classList.contains('dark')) {
+        toggleImg.src = animDarkToLight.src + '?' + Date.now();
+        setTimeout(() => {
+          document.body.classList.replace('dark', 'light');
+          toggleImg.src = 'pictures/light.png';
+          themeStatus.textContent = 'Day mode';
+          localStorage.setItem('theme', 'light');
+          isAnimating = false;
+        }, ANIMATION_MS);
+      } else {
+        toggleImg.src = animLightToDark.src + '?' + Date.now();
+        setTimeout(() => {
+          document.body.classList.replace('light', 'dark');
+          toggleImg.src = 'pictures/dark.png';
+          themeStatus.textContent = 'Night mode';
+          localStorage.setItem('theme', 'dark');
+          isAnimating = false;
+        }, ANIMATION_MS);
+      }
+    });
+  </script>
+</body>
+</html>
